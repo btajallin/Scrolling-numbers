@@ -18,7 +18,12 @@ jobs:
 
       - name: Set up Arduino CLI
         uses: arduino/setup-arduino-cli@v2
-        # no "version: latest" here – use default
+
+      - name: Init Arduino CLI config and add ESP32 boards URL
+        run: |
+          arduino-cli config init
+          arduino-cli config set board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli config dump
 
       - name: Install ESP32 core
         run: |
@@ -27,7 +32,7 @@ jobs:
 
       - name: Install required libraries
         run: |
-          arduino-cli lib install bb_spi_lcd
+          arduino-cli lib install "bb_spi_lcd"
 
       - name: Compile scrolling_terminal sketch
         run: |
